@@ -1,18 +1,14 @@
-require 'bundler/setup'
-Bundler.setup
-
-require 'active_elastic_job'
-
-require 'dotenv'
-Dotenv.load
-
-require File.expand_path('./helpers.rb', File.dirname(__FILE__))
+require "bundler/setup"
+require "active/elastic/job2"
 
 RSpec.configure do |config|
-  config.filter_run_excluding slow: true if ENV['EXCEPT_SLOW'] == 'true'
-  config.filter_run_excluding deployed: true if ENV['EXCEPT_DEPLOYED'] == 'true'
+  # Enable flags like --only-failures and --next-failure
+  config.example_status_persistence_file_path = ".rspec_status"
+
+  # Disable RSpec exposing methods globally on `Module` and `main`
+  config.disable_monkey_patching!
+
   config.expect_with :rspec do |c|
     c.syntax = :expect
   end
-  config.include Helpers
 end
